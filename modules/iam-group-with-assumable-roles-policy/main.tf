@@ -22,9 +22,8 @@ resource "aws_iam_group_policy_attachment" "this" {
 }
 
 resource "aws_iam_user_group_membership" "this" {
-  for_each = toset(var.group_users)
+  count = length(var.group_users)
 
-  user = each.key
-  groups = [aws_iam_group.this.id]
+  user = element(var.group_users, count.index)
+  groups = [local.group_name]
 }
-

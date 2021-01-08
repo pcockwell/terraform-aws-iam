@@ -9,9 +9,9 @@ resource "aws_iam_group" "this" {
 }
 
 resource "aws_iam_user_group_membership" "this" {
-  for_each = toset(var.group_users)
+  count = length(var.group_users)
 
-  user = each.key
+  user = element(var.group_users, count.index)
   groups = [local.group_name]
 }
 
