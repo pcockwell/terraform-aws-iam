@@ -8,12 +8,11 @@ resource "aws_iam_group" "this" {
   name = var.name
 }
 
-resource "aws_iam_group_membership" "this" {
-  count = length(var.group_users) > 0 ? 1 : 0
+resource "aws_iam_user_group_membership" "this" {
+  count = length(var.group_users)
 
-  group = local.group_name
-  name  = var.name
-  users = var.group_users
+  user = element(var.group_users, count.index)
+  groups = [local.group_name]
 }
 
 ################################

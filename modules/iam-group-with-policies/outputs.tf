@@ -5,7 +5,7 @@ output "aws_account_id" {
 
 output "this_group_users" {
   description = "List of IAM users in IAM group"
-  value       = flatten(aws_iam_group_membership.this.*.users)
+  value       = distinct(flatten(aws_iam_user_group_membership.this[*].user))
 }
 
 output "this_group_name" {
